@@ -21,3 +21,6 @@ vim conf :
 ```
 ./bin/mongo 127.0.0.1:12345/mydb
 ```
+### Schema
+#### options   new Schema({},options)
+- autoIndex 禁止自动创建索引
