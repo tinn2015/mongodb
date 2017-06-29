@@ -23,4 +23,14 @@ vim conf :
 ```
 ### Schema
 #### options   new Schema({},options)
-- autoIndex 禁止自动创建索引
+- autoIndex: false 禁止自动创建索引
+- bufferCommand: false 禁用缓冲
+- capped: 1024     capped: {  size: 1024, max: 1000, autoIndexId: true } 文档的最大字节数
+- collection: 'data' 设置集合名称
+- emitIndexErrors: true  当索引建立失败后会在模型上发出一个error事件
+- id: false  在Schema构建时禁止生成id属性
+- _id: false  禁止在模式上加上_id
+- minimize: false  存储空对象
+-strict: false   构造函数中的值没有被指定在模式中，该值也会被保存
+-validateBeforeSave   保存前验证
+
