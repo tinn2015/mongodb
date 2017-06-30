@@ -34,3 +34,24 @@ vim conf :
 -strict: false   构造函数中的值没有被指定在模式中，该值也会被保存
 -validateBeforeSave   保存前验证
 
+### Model
+#### var Book = mongoose.model('Book', schema)  name为单数形式，mongoose会自动寻找复数形式，在数据库集合为Books
+#### 文档是模型的
+- .save()
+- .remove()
+
+### Documents
+#### 检索 更新
+- 更新
+ ```
+    Tank.findById(id, function (err, tank) {
+  if (err) return handleError(err);
+
+  tank.size = 'large';
+  tank.save(function (err) {
+    if (err) return handleError(err);
+    res.send(tank);
+  });
+});
+ ```
+
