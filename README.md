@@ -39,6 +39,14 @@ vim conf :
 #### 文档是模型的
 - .save()
 - .remove()
+- init()
+- validate()
+- count()
+- find()
+- findOne()
+- findOneAndRemove()
+- findOneAndUpdate()
+- update
 
 ### Documents
 #### 检索 更新
@@ -126,6 +134,44 @@ vim conf :
       }
     });
  ```
+ ### 中间件
+ #### 有两种类型的前置钩子，串行（serial）和并行（parallel）
+ - 串行 next()
+ ```
+ var schema = new Schema(..);
+  schema.pre('save', function(next) {
+  // do stuff
+  next();
+});
+ ```
+ - 并行
+ ```
+ var schema = new Schema(..);
+
+// `true` means this is a parallel middleware. You **must** specify `true`
+// as the second parameter if you want to use parallel middleware.
+schema.pre('save', true, function(next, done) {
+  // calling next kicks off the next middleware in parallel
+  next();
+  setTimeout(done, 100);
+});
+ ```
+ - 错误处理
+ ```
+ schema.pre('save', function(next) {
+  // You **must** do `new Error()`. `next('something went wrong')` will
+  // **not** work
+  var err = new Error('something went wrong');
+  next(err);
+});
+
+// later...
+
+myDoc.save(function(err) {
+  console.log(err.message) // something went wrong
+});
+ ```
+ 
  
  
  
