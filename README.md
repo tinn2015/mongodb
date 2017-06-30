@@ -45,13 +45,88 @@ vim conf :
 - 更新
  ```
     Tank.findById(id, function (err, tank) {
-  if (err) return handleError(err);
+      if (err) return handleError(err);
 
-  tank.size = 'large';
-  tank.save(function (err) {
-    if (err) return handleError(err);
-    res.send(tank);
-  });
-});
+      tank.size = 'large';
+      tank.save(function (err) {
+        if (err) return handleError(err);
+        res.send(tank);
+      });
+    });
  ```
+ ### query 
+ #### 模型的几个静态方法检索文档，
+ - 在Person中查询name.last匹配'Ghost'的，选出name和occupation的数据
+ ```
+ Person.findOne({ 'name.last': 'Ghost' }, 'name occupation', function (err, person) {
+  if (err) return handleError(err);
+  console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation) // Space Ghost is a talk show host.
+})
+ ```
+ - 所有mongosoe 的回掉模式为callback(error,result)
+ - findone()  一种单文档
+ - find() 一个文档列表
+ - count() 文档数量
+ - update() 文件数量
+ 
+ ### 验证
+ - 验证定义在Schema Type中
+ - 验证时中间件，mongoose在每次保存会在schema的pre.('save')中触发
+ - 手动使用doc验证，validate(callback)或者doc.validateSync()
+ - 除了require验证器，验证程序不在未定义的值上触发
+ - 验证异步递归
+ - 验证时可定制的
+ -
+ ```
+ var breakfastSchema = new Schema({
+      eggs: {
+        type: Number,
+        min: [6, 'Too few eggs'],
+        max: 12
+      },
+      bacon: {
+        type: Number,
+        required: [true, 'Why no bacon?']
+      },
+      drink: {
+        type: String,
+        enum: ['Coffee', 'Tea']
+      }
+    });
+    var Breakfast = db.model('Breakfast', breakfastSchema);
+
+    var badBreakfast = new Breakfast({
+      eggs: 2,
+      bacon: 0,
+      drink: 'Milk'
+    });
+    var error = badBreakfast.validateSync();
+    assert.equal(error.errors['eggs'].message,
+      'Too few eggs');
+    assert.ok(!error.errors['bacon']);
+    assert.equal(error.errors['drink'].message,
+      '`Milk` is not a valid enum value for path `drink`.');
+
+    badBreakfast.bacon = null;
+    error = badBreakfast.validateSync();
+    assert.equal(error.errors['bacon'].message, 'Why no bacon?');
+ ```
+ - 自定义验证器
+ ```
+  var userSchema = new Schema({
+      phone: {
+        type: String,
+        validate: {
+          validator: function(v) {
+            return /\d{3}-\d{3}-\d{4}/.test(v);
+          },
+          message: '{VALUE} is not a valid phone number!'
+        },
+        required: [true, 'User phone number required']
+      }
+    });
+ ```
+ 
+ 
+ 
 
