@@ -64,6 +64,7 @@ vim conf :
     });
  ```
  ### query 
+ #### [查询方式](https://segmentfault.com/a/1190000004294447)
  #### 模型的几个静态方法检索文档，
  - 在Person中查询name.last匹配'Ghost'的，选出name和occupation的数据
  ```
@@ -180,8 +181,11 @@ myDoc.save(function(err) {
  - db.users.ensureIndex({ 'username': 1 })  1/-1表示索引的排序方向
  #### 复合索引
  `
- db.users.find().sort({'age': 1, 'username': 1})  使用索引键对文档进行排序，先根据age排序，再根据username
+ db.users.find().sort({'age': 1, 'username': 1})  使用索引键对文档进行排序，先根据age排序，再根据username排序，所以username的作用并不大
+ 这是在age和username上建立索引
+ db.users.ensureIndex({ 'age': 1, 'user': 1 })   这样就建立了复合索引（建立在多个字段上的索引） 如果查询条件是多个键这将非常实用
  `
+ 
  
  
  
