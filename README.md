@@ -173,6 +173,20 @@ myDoc.save(function(err) {
 });
  ```
  
+ ### 索引
+ [索引入门](https://segmentfault.com/a/1190000004294447)
+ #### 添加的每条索引，每次写操作都会耗费更多时间。因此mongodb限制每个集合最多有64个索引，通常一个集合中索引不超过两个
+ #### 普通索引
+ - db.users.ensureIndex({ 'username': 1 })  1/-1表示索引的排序方向
+ #### 复合索引
+ `
+ db.users.find().sort({'age': 1, 'username': 1})  使用索引键对文档进行排序，先根据age排序，再根据username
+ `
+ 
+ 
+ 
+ 
+ 
  
  
  
