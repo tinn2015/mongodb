@@ -24,6 +24,7 @@ vim conf :
 ### Schema
 #### options   new Schema({},options)
 - autoIndex: false 禁止自动创建索引
+- ensureIndex({'username': 1})     建立username 索引， 1/-1 表示索引方向
 - bufferCommand: false 禁用缓冲
 - capped: 1024     capped: {  size: 1024, max: 1000, autoIndexId: true } 文档的最大字节数
 - collection: 'data' 设置集合名称
