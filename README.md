@@ -185,7 +185,8 @@ myDoc.save(function(err) {
  这是在age和username上建立索引
  db.users.ensureIndex({ 'age': 1, 'user': 1 })   这样就建立了复合索引（建立在多个字段上的索引） 如果查询条件是多个键这将非常实用
  `
- 
+ ### 时间
+ [mongodb 时间处理](http://www.cnblogs.com/kaituorensheng/p/5155955.html#_label2)
  
  
  
